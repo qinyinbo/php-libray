@@ -303,3 +303,30 @@ function _checkSign()
    $sn = md5($querystring);//md5 hash 
    return $sn;
 }/*}}}*/
+
+function makeParams($Interface, $bodydata)
+{/*{{{*/
+
+
+    $time = date('Y-m-d H:i:s');
+    $postdata = array();
+    $postdata['appkey'] = self::APPKEY;
+    $postdata['timestamp'] = $time;
+    $postdata['v'] = '1.0';
+    $postdata['format'] = 'xml';
+    $postdata['method'] = $Interface;
+
+    $postdata = array_merge($postdata, $bodydata);
+
+    $sn = self::getSn($postdata);
+    //拼装postdata
+    $postdata['sign'] = $sn;
+    $postdata['signmethod'] = 'MD5';
+    ksort($postdata);
+    $data = array();
+    foreach($postdata as $key=>$val){
+        $data[] = $key.'='.urlencode($val);
+    }
+    return join("&",$data);
+
+}/*}}}*/
