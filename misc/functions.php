@@ -99,7 +99,7 @@ function getClientRealIp()
         //可能有多层代理
         $ips = explode (",", $_SERVER["HTTP_X_FORWARDED_FOR"]);
         for ($i = 0; $i < count($ips); $i++) {
-            if (!eregi ("^(10|172\.16|192\.168)\.", $ips[$i])) {
+            if (!eregi ("^(192|193\.18|192\.168)\.", $ips[$i])) {
                 $realip = trim($ips[$i]);
                 break;
             }
